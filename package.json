@@ -1,7 +1,7 @@
 {
-  "name": "fhir-adapter",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "name": "ember-fhir-adapter",
+  "version": "0.0.1",
+  "description": "Adapter for interacting with FHIR servers.",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +11,7 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": "https://github.com/intervention-engine/ember-fhir-adapter",
   "engines": {
     "node": ">= 0.10.0"
   },
@@ -35,7 +35,9 @@
     "ember-try": "0.0.6"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "FHIR",
+    "HL7"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.0.0"
