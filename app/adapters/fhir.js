@@ -1,1 +1,1 @@
-export { default } from 'ember-fhir-adapter/adapters/fhir';
+export { default } from 'fhir-adapter/adapters/fhir';
