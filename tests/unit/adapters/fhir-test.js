@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('adapter:fhir', 'Unit | Adapter | fhir', {
+moduleFor('adapter:application', 'Unit | Adapter | fhir', {
   // Specify the other units that are required for this test.
   // needs: ['serializer:fhir']
 });

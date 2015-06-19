@@ -59,7 +59,7 @@ module( 'Unit - serializer:application', {
 
     container.register( 'model:patient', DS.Model.extend({
       gender    : DS.attr( 'string' ),
-      name      : DS.hasMany('human-name', {async:false})
+      name      : DS.hasMany('human-name', {embedded:true})
     }));
 
     Patient = store.modelFor( 'patient' );
@@ -70,6 +70,10 @@ module( 'Unit - serializer:application', {
   afterEach: function() {
     Ember.run( container, 'destroy' );
   }
+});
+
+test('serializer registered properly', function(assert){
+  assert.ok(serializer);
 });
 
 test('attributeForKey is properly built', function(assert){
