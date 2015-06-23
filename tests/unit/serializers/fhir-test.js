@@ -59,12 +59,12 @@ module( 'Unit - serializer:application', {
 
     container.register( 'model:patient', DS.Model.extend({
       gender    : DS.attr( 'string' ),
-      name      : DS.hasMany('human-name', {embedded:true})
+      name      : DS.hasMany('human-name', {included:true})
     }));
 
     Patient = store.modelFor( 'patient' );
 
-    container.register( 'serializer:patient', Serializer );
+    container.register( 'serializer:patient', Serializer);
   },
 
   afterEach: function() {
@@ -85,20 +85,20 @@ test( 'Requires id as key', function( assert ) {
 });
 
 test('payload should be properly extracted for single model', function(assert){
-  var res = serializer.extractSingle(store, Patient, patientJSON);
-  assert.equal(res.gender, "male", "Gender should have been male");
-  assert.equal(res.id, 1, "id should equal 1");
+    var res = serializer.normalize(Patient, patientJSON).data;
+    assert.equal(res.attributes.gender, "male", "Gender should have been male");
+    assert.equal(res.id, "1", "id should equal 1");
 });
 
 test('extract resource type', function(assert){
   assert.equal(serializer._extractType(null, patientJSON), "patient");
 });
 
-
-
 test('assert embedded record loads properly', function(assert){
-  var pat;
-  store.push('patient', patientJSON);
-  pat = store.findRecord("patient", 1);
-  assert.ok(pat);
+  Ember.run(function(){
+    var pat;
+    store.push(serializer.normalize(Patient, patientJSON));
+    pat = store.findRecord("patient", 1);
+    assert.ok(pat);
+  });
 });
