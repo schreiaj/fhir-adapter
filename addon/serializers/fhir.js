@@ -24,47 +24,40 @@ export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
         id:            this.extractId(hash),
         type:          modelClass.modelName,
         attributes:    this.extractAttributes(modelClass, hash),
-        included:      this.extractIncluded(modelClass, hash)
-        // relationships: this.extractRelationships(modelClass, hash)
+        included:      this.extractIncluded(modelClass, hash),
+        relationships: this.extractRelationships(modelClass, hash)
 
       };
 
       this.applyTransforms(modelClass, data.attributes);
     }
-
+    console.log(data);
     return { data };
   },
 
   extractIncluded: function (modelClass, resourceHash) {
-    let includes = {};
+    let includes = [];
     // let relationships = {};
 
     modelClass.eachRelationship(function (key, relationshipMeta) {
-      let relationship = null;
       let relationshipKey = this.keyForRelationship(key, relationshipMeta.kind, 'deserialize');
       if (resourceHash.hasOwnProperty(relationshipKey)) {
-        let data = null;
         let relationshipHash = resourceHash[relationshipKey];
         if (relationshipMeta.options.included === true) {
           if (relationshipMeta.kind === 'hasMany') {
-            data = Ember.A(relationshipHash).map(function(item){
-              return this.extractRelationship(relationshipMeta.type, item);
+            Ember.A(relationshipHash).forEach(function(item){
+              includes.push(this.extractRelationship(relationshipMeta.type, item, true));
             }, this);
           }
           if (relationshipMeta.kind === 'belongsTo') {
-            data = this.extractRelationship(relationshipMeta.type, relationshipHash);
+            includes.push(this.extractRelationship(relationshipMeta.type, relationshipHash, true));
           }
 
-          relationship = {data};
-        }
-        if (relationship) {
-          includes[key] = relationship;
 
         }
       }
     }, this);
-    console.log({includes: includes});
-    return {includes};
+    return includes;
   },
 
 

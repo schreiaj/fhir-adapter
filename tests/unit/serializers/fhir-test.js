@@ -100,5 +100,7 @@ test('assert embedded record loads properly', function(assert){
     store.push(serializer.normalize(Patient, patientJSON));
     pat = store.findRecord("patient", 1);
     assert.ok(pat);
+    debugger
+    console.log(pat.get('gender'));
   });
 });

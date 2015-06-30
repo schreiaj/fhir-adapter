@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import DS from 'ember-data';
 
-export default DS.RESTAdapter.extend({
+export default DS.JSONAPIAdapter.extend({
   defaultSerializer: '-fhir',
 
   pathForType: function(type){
